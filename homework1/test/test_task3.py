@@ -1,5 +1,7 @@
-# test_task3.py
-# Task 3 unit tests
+'''
+Write pytest test cases to verify the correctness of your code for each control structure.
+'''
+
 
 from src import task3
 

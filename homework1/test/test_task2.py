@@ -1,3 +1,8 @@
+'''
+Implement a unit test using pytest to test case for each
+data type, ensuring that the script’s behavior matches the expected outcomes.
+'''
+
 from src import task2
 
 def test_get_integer():
