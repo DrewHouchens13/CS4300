@@ -9,7 +9,9 @@ represents a basic student database, including student names and their correspon
 favorite_books = [
     ("The Gunslinger", "Stephen King"),
     ("Farewell to Arms", "Ernest Hemingway"),
-    ("Dinosaurs Before Dark", "Mary Pope Osborne")
+    ("Dinosaurs Before Dark", "Mary Pope Osborne"),
+    ("Why So Serious?: The Untold Story of NBA Champion Nikola Jokic", "Mike Singer"),
+    ("Fahrenheit 451", "Ray Bradbury")
 ]
 
 # Use slicing to get the first three books
@@ -20,5 +22,7 @@ first_three_books = favorite_books[:3]
 student_db = {
     "Ricky": "S001",
     "Bobby": "S002",
-    "Slick": "S003"
+    "Slick": "S003",
+    "Steve": "S004",
+    "Alex": "S005"
 }
