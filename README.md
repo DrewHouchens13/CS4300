@@ -36,7 +36,7 @@ CS4300/
 └── hw1_env/
 ```
 
-## ▶️ Running the Code & Tests
+## ▶️ Running the Code & Tests For Homework 1
 
 ### 1. Activate the Virtual Environment
 
@@ -76,7 +76,7 @@ pytest test/test_task3.py
 pytest -v
 ```
 
-## ✅ Notes
+## ✅ Notes for Homework 1
 - Ensure your virtual environment is **activated** before running tests.
 - All test files follow the naming convention `test_taskX.py`, which maps directly to the corresponding `taskX.py` in the `src/` folder.
 - The project uses **pytest** for testing; make sure it is installed inside the virtual environment.
