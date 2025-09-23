@@ -9,8 +9,32 @@ The project is organized to separate **source files (`src/`)** from **test files
 ---
 
 ## 📂 Project Structure
-![alt text](image.png)
----
+```
+CS4300/
+├── homework1/
+│   ├── src/
+│   │   ├── task1.py
+│   │   ├── task2.py
+│   │   ├── task3.py
+│   │   ├── task4.py
+│   │   ├── task5.py
+│   │   ├── task6_read_me.txt
+│   │   ├── task6.py
+│   │   └── task7.py
+│   ├── test/
+│   │   ├── __pycache__/
+│   │   ├── test_task1.py
+│   │   ├── test_task2.py
+│   │   ├── test_task3.py
+│   │   ├── test_task4.py
+│   │   ├── test_task5.py
+│   │   ├── test_task6.py
+│   │   └── test_task7.py
+│   └── pyproject.toml
+├── README.md
+├── homework2/
+└── hw1_env/
+```
 
 ## ▶️ Running the Code & Tests
 
