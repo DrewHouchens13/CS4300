@@ -1,43 +1,23 @@
 '''
-Implement a unit test using pytest to test case for each
-data type, ensuring that the script’s behavior matches the expected outcomes.
+Implement pytest test cases to verify the correctness of your code 
+for each function, using parameterized tests.
 '''
 
+import pytest
 from src import task2
 
-'''
-test_get_integer()
-Purpose: Check get_interger() returns correct type
-'''
-def test_get_integer():
-    result = task2.get_integer()
-    assert isinstance(result, int)
-    assert result == 42
 
 '''
-test_get_float()
-Purpose: Check get_float() returns correct type
+test_data_types(func, expected_type, expected_value)
+Purpose: Verify that each getter function returns the correct type and value.
 '''
-def test_get_float():
-    result = task2.get_float()
-    assert isinstance(result, float)
-    assert result == 3.14
-
-'''
-test_get_string()
-Purpose: Check get_string() returns correct type
-'''
-def test_get_string():
-    result = task2.get_string()
-    assert isinstance(result, str)
-    assert result == "hello world"
-
-
-'''
-test_get_boolean()
-Purpose: Check get_boolean() returns correct type
-'''
-def test_get_boolean():
-    result = task2.get_boolean()
-    assert isinstance(result, bool)
-    assert result is True
+@pytest.mark.parametrize("func, expected_type, expected_value", [
+    (task2.get_integer, int, 42),
+    (task2.get_float, float, 3.14),
+    (task2.get_string, str, "hello world"),
+    (task2.get_boolean, bool, True),
+])
+def test_data_types(func, expected_type, expected_value):
+    result = func()
+    assert isinstance(result, expected_type)
+    assert result == expected_value
