@@ -3,6 +3,10 @@ Create a new file named task1.py. Write a Python script that prints "Hello, Worl
 console
 '''
 
+'''
+task1() 
+Prints "Hello World" 
+'''
 def task1():
     print("Hello World")
 
