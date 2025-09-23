@@ -59,7 +59,7 @@ cd homework1
 ```
 
 ### 3. Run the Test Cases with Pytest
-Execute the test suite to validate your code:
+Execute the test suite to validate tasks 1-7:
 
 ```bash
 pytest
@@ -69,11 +69,6 @@ pytest
 -To run a specific test file (e.g., only for Task 3):
 ```bash
 pytest test/test_task3.py
-```
-
--To increase verbosity (see more detail on each test):
-```bash
-pytest -v
 ```
 
 ## ✅ Notes for Homework 1
