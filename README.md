@@ -1,14 +1,14 @@
-# CS4300 Homework Repository
+# CS4300 Homework 1 ReadMe
 
-This repository contains Python source code and corresponding **pytest unit tests** for the CS4300 homework assignments.  
+This repository contains Python source code and corresponding **pytest unit tests** for CS 4300 Homework 1 currently.  
 
 Each task demonstrates core Python concepts such as data types, control structures, file I/O, duck typing, package usage, and testing methodology.  
 
-The project is organized to separate **source files (`src/`)** from **test files (`test/`)**, ensuring a clean and professional workflow.
+Homework 1 is organized to separate **source files (`src/`)** from **test files (`test/`)**, ensuring a clean and professional workflow.
 
 ---
 
-## 📂 Project Structure
+## 📂 Project Structure 
 ```
 CS4300/
 ├── homework1/
