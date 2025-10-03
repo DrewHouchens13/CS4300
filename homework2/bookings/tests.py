@@ -90,7 +90,7 @@ class APITests(APITestCase):
     
     def test_movies_api_list(self):
         """Test GET /api/movies/ returns list of movies"""
-        url = reverse('movie-list')
+        url = '/api/movies/'
         response = self.client.get(url)
         
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -100,7 +100,7 @@ class APITests(APITestCase):
     
     def test_movies_api_create(self):
         """Test POST /api/movies/ creates new movie"""
-        url = reverse('movie-list')
+        url = '/api/movies/'
         data = {
             'title': 'New Movie',
             'description': 'A newly created movie',
@@ -115,7 +115,7 @@ class APITests(APITestCase):
     
     def test_seats_api_list(self):
         """Test GET /api/seats/ returns list of seats"""
-        url = reverse('seat-list')
+        url = '/api/seats/'
         response = self.client.get(url)
         
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -124,7 +124,7 @@ class APITests(APITestCase):
     
     def test_seats_api_create(self):
         """Test POST /api/seats/ creates new seat"""
-        url = reverse('seat-list')
+        url = '/api/seats/'
         data = {'seat_number': 'C3'}
         response = self.client.post(url, data, format='json')
         
@@ -134,7 +134,7 @@ class APITests(APITestCase):
     
     def test_seat_booking_api(self):
         """Test POST /api/seats/{id}/book/ books a seat"""
-        url = reverse('seat-book', kwargs={'pk': self.seat.pk})
+        url = f'/api/seats/{self.seat.pk}/book/'
         data = {'movie_id': self.movie.pk}
         response = self.client.post(url, data, format='json')
         
@@ -151,7 +151,7 @@ class APITests(APITestCase):
         Booking.objects.create(movie=self.movie, seat=self.seat, user=self.user)
         
         # Try to book again
-        url = reverse('seat-book', kwargs={'pk': self.seat.pk})
+        url = f'/api/seats/{self.seat.pk}/book/'
         data = {'movie_id': self.movie.pk}
         response = self.client.post(url, data, format='json')
         
@@ -163,7 +163,7 @@ class APITests(APITestCase):
         # Create a booking first
         Booking.objects.create(movie=self.movie, seat=self.seat, user=self.user)
         
-        url = reverse('booking-list')
+        url = '/api/bookings/'
         response = self.client.get(url)
         
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -173,7 +173,7 @@ class APITests(APITestCase):
     
     def test_bookings_api_create(self):
         """Test POST /api/bookings/ creates new booking"""
-        url = reverse('booking-list')
+        url = '/api/bookings/'
         data = {
             'movie_id': self.movie.pk,
             'seat_id': self.seat.pk
@@ -203,7 +203,7 @@ class PageTests(TestCase):
     
     def test_movie_list_page(self):
         """Test movie list page loads correctly"""
-        url = reverse('movie_list_page')
+        url = '/api/pages/movies/'
         response = self.client.get(url)
         
         self.assertEqual(response.status_code, 200)
@@ -211,7 +211,7 @@ class PageTests(TestCase):
     
     def test_seat_booking_page(self):
         """Test seat booking page loads correctly"""
-        url = reverse('movie_seat_grid_page', kwargs={'movie_id': self.movie.pk})
+        url = f'/api/pages/movies/{self.movie.pk}/seats/'
         response = self.client.get(url)
         
         self.assertEqual(response.status_code, 200)
@@ -219,7 +219,7 @@ class PageTests(TestCase):
     
     def test_booking_history_page(self):
         """Test booking history page loads correctly"""
-        url = reverse('booking_history_page')
+        url = '/api/pages/history/'
         response = self.client.get(url)
         
         self.assertEqual(response.status_code, 200)
