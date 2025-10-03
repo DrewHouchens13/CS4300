@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head><title>Seat Grid</title></head>
+<body>
+  <h1>Seat Selection for {{ movie.title }}</h1>
+  <nav>
+    <a href="{% url 'movie_list_page' %}">Movies</a> |
+    <a href="{% url 'booking_history_page' %}">Booking History</a> |
+    <a href="{% url 'movie-list' %}">API Root</a>
+  </nav>
+
+  <form method="post">
+    {% csrf_token %}
+    <table border="1" cellpadding="6" cellspacing="0">
+      <tbody>
+        {% for row_letter, entries in ordered_rows %}
+          <tr>
+            <th>{{ row_letter }}</th>
+            {% for col, seat in entries %}
+              {% if seat.id in booked_ids %}
+                <td style="background:#eee; color:#888;">{{ seat.seat_number }}<br><small>Booked</small></td>
+              {% else %}
+                <td>
+                  <label style="display:block;">
+                    <input type="checkbox" name="seat_ids" value="{{ seat.id }}">
+                    {{ seat.seat_number }}
+                  </label>
+                </td>
+              {% endif %}
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div style="margin-top:12px;">
+      <button type="submit">Book Selected Seats</button>
+    </div>
+  </form>
+</body>
+</html>
