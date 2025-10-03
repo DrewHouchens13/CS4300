@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
 from django.views.decorators.http import require_http_methods
+from django.contrib import messages
 from .models import Movie, Seat, Booking
 
 User = get_user_model()
@@ -38,7 +39,8 @@ def quick_book_seat(request, seat_id):
         return redirect("seat_list_page")
     user = request.user if request.user.is_authenticated else User.objects.get_or_create(username="guest")[0]
     Booking.objects.create(movie=movie, seat=seat, user=user)
-    return redirect("booking_history_page")
+    messages.success(request, f"Successfully booked seat {seat.seat_number} for {movie.title}!")
+    return redirect("movie_list_page")
 
 
 def movie_seat_grid_page(request, movie_id: int):
@@ -48,6 +50,7 @@ def movie_seat_grid_page(request, movie_id: int):
     if request.method == "POST":
         seat_ids = request.POST.getlist("seat_ids")
         user = request.user if request.user.is_authenticated else User.objects.get_or_create(username="guest")[0]
+        booked_seats = []
         for sid in seat_ids:
             try:
                 seat = Seat.objects.get(pk=sid)
@@ -55,7 +58,10 @@ def movie_seat_grid_page(request, movie_id: int):
                 continue
             if not Booking.objects.filter(movie=movie, seat=seat).exists():
                 Booking.objects.create(movie=movie, seat=seat, user=user)
-        return redirect("booking_history_page")
+                booked_seats.append(seat.seat_number)
+        if booked_seats:
+            messages.success(request, f"Successfully booked seats {', '.join(booked_seats)} for {movie.title}!")
+        return redirect("movie_list_page")
 
     seats = list(Seat.objects.all().order_by("seat_number"))
     booked_ids = set(Booking.objects.filter(movie=movie).values_list("seat_id", flat=True))
