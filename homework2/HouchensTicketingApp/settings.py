@@ -27,6 +27,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["editor-cs4300container-20.devedu.io"]
 
+#Default permissions for API calls 
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
+    "DEFAULT_AUTHENTICATION_CLASSES": [],  # ← disable Basic/Session auth for now
+}
 
 # Application definition
 
@@ -37,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'bookings',
 ]
 
