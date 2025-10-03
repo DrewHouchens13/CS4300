@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
 
 
 """
@@ -24,5 +25,6 @@ from django.urls import path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include("bookings.urls")),  #/api/movies/ etc.
+    path("api/", include("bookings.urls")), #/api/movies/ etc.
+    path("", RedirectView.as_view(url="/api/pages/movies/", permanent=False)), 
 ]

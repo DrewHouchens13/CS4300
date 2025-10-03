@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head><title>Booking History</title></head>
+<body>
+  <h1>Booking History</h1>
+  <nav>
+    <a href="/api/pages/movies/">Movies</a> |
+    <a href="/api/pages/seats/">Seats</a> |
+    <a href="/api/">API Root</a>
+  </nav>
+  <ul>
+    {% for b in bookings %}
+      <li>
+        {{ b.booking_date }} — Seat {{ b.seat.seat_number }} for <em>{{ b.movie.title }}</em>
+        {% if b.user %} ({{ b.user.username }}){% endif %}
+      </li>
+    {% empty %}
+      <li>No bookings yet.</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

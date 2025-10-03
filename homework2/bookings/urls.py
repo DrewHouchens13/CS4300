@@ -1,10 +1,20 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import MovieViewSet  # add others later
+from .views import MovieViewSet, SeatViewSet, BookingViewSet
+from . import pages
 
 router = DefaultRouter()
 router.register(r"movies", MovieViewSet, basename="movie")
+router.register(r"seats", SeatViewSet, basename="seat")
+router.register(r"bookings", BookingViewSet, basename="booking")
 
 urlpatterns = [
+    # API
     path("", include(router.urls)),
+
+    # Pages (MVT)
+    path("pages/movies/", pages.movie_list_page, name="movie_list_page"),
+    path("pages/seats/", pages.seat_list_page, name="seat_list_page"),
+    path("pages/book/<int:seat_id>/", pages.quick_book_seat, name="quick_book_seat"),
+    path("pages/history/", pages.booking_history_page, name="booking_history_page"),
 ]

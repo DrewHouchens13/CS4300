@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head><title>Seats</title></head>
+<body>
+  <h1>Seats</h1>
+  <nav>
+    <a href="/api/pages/movies/">Movies</a> |
+    <a href="/api/pages/history/">Booking History</a> |
+    <a href="/api/">API Root</a>
+  </nav>
+
+  <form method="get" action="">
+    <label>
+      Show:
+      <select name="is_booked" onchange="this.form.submit()">
+        <option value="">All</option>
+        <option value="false" {% if request.GET.is_booked == 'false' %}selected{% endif %}>Available</option>
+        <option value="true" {% if request.GET.is_booked == 'true' %}selected{% endif %}>Booked</option>
+      </select>
+    </label>
+  </form>
+
+  <ul>
+    {% for s in seats %}
+      <li>
+        Seat {{ s.seat_number }} — {% if s.is_booked %}<strong>Booked</strong>{% else %}Available{% endif %}
+        {% if not s.is_booked %}
+          <form method="post" action="/api/pages/book/{{ s.id }}/" style="display:inline;">
+            {% csrf_token %}
+            <label>Movie ID: <input type="number" name="movie_id" required></label>
+            <button type="submit">Book</button>
+          </form>
+        {% endif %}
+      </li>
+    {% empty %}
+      <li>No seats.</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

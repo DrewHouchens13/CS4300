@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-of-5q*5()%2^!(2!%s=g*0yzitav1tdsd9mayu*_sdx&wd186d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["editor-cs4300container-20.devedu.io"]
+ALLOWED_HOSTS = ["editor-cs4300container-20.devedu.io", "127.0.0.1"]
 
 #Default permissions for API calls 
 REST_FRAMEWORK = {
