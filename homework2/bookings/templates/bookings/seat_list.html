@@ -9,28 +9,21 @@
     <a href="{% url 'movie-list' %}">API Root</a>
   </nav>
 
-  <form method="get" action="">
-    <label>
-      Show:
-      <select name="is_booked" onchange="this.form.submit()">
-        <option value="">All</option>
-        <option value="false" {% if request.GET.is_booked == 'false' %}selected{% endif %}>Available</option>
-        <option value="true" {% if request.GET.is_booked == 'true' %}selected{% endif %}>Booked</option>
-      </select>
-    </label>
-  </form>
-
   <ul>
     {% for s in seats %}
       <li>
-        Seat {{ s.seat_number }} — {% if s.is_booked %}<strong>Booked</strong>{% else %}Available{% endif %}
-        {% if not s.is_booked %}
-          <form method="post" action="{% url 'quick_book_seat' s.id %}" style="display:inline;">
-            {% csrf_token %}
-            <label>Movie ID: <input type="number" name="movie_id" required></label>
-            <button type="submit">Book</button>
-          </form>
-        {% endif %}
+        Seat {{ s.seat_number }}
+        <form method="post" action="{% url 'quick_book_seat' s.id %}" style="display:inline; margin-left: 12px;">
+          {% csrf_token %}
+          <label>Movie:
+            <select name="movie_id" required>
+              {% for m in movies %}
+                <option value="{{ m.id }}">{{ m.title }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <button type="submit">Book</button>
+        </form>
       </li>
     {% empty %}
       <li>No seats.</li>

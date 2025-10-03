@@ -13,10 +13,9 @@ class Movie(models.Model):
 
 class Seat(models.Model):
     seat_number = models.CharField(max_length=10)
-    is_booked = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Seat {self.seat_number} ({'Booked' if self.is_booked else 'Available'})"
+        return f"Seat {self.seat_number}"
 
 
 class Booking(models.Model):
@@ -24,6 +23,11 @@ class Booking(models.Model):
     seat = models.ForeignKey(Seat, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     booking_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["movie", "seat"], name="unique_booking_per_movie_seat"),
+        ]
 
     def __str__(self):
         return f"{self.user.username} - {self.movie.title} ({self.seat.seat_number})"

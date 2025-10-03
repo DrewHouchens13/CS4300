@@ -17,33 +17,20 @@ class MovieViewSet(viewsets.ModelViewSet):
 class SeatViewSet(viewsets.ModelViewSet):
     """
     /api/seats/                -> list/create
-    /api/seats/?is_booked=false -> filter available seats
-    /api/seats/<id>/book/      -> POST {movie_id: <id>} to book this seat
+    /api/seats/<id>/book/      -> POST {movie_id: <id>} to book this seat for a movie
     """
     queryset = Seat.objects.all().order_by("seat_number")
     serializer_class = SeatSerializer
     permission_classes = [permissions.AllowAny]
 
-    def get_queryset(self):
-        qs = super().get_queryset()
-        is_booked = self.request.query_params.get("is_booked")
-        if is_booked is not None:
-            if is_booked.lower() in ("true", "1", "yes"):
-                qs = qs.filter(is_booked=True)
-            elif is_booked.lower() in ("false", "0", "no"):
-                qs = qs.filter(is_booked=False)
-        return qs
-
     @action(detail=True, methods=["post"])
     def book(self, request, pk=None):
         """
-        Book this seat by creating a Booking and marking seat.is_booked=True.
-        Expects JSON: {"movie_id": <id>}
+        Book this seat for a given movie by creating a Booking.
+        Expects JSON: {"movie_id": <id>}.
         Uses authenticated user if available, else a 'guest' user for dev convenience.
         """
         seat = self.get_object()
-        if seat.is_booked:
-            return Response({"detail": "Seat already booked."}, status=400)
 
         movie_id = request.data.get("movie_id")
         if not movie_id:
@@ -54,14 +41,16 @@ class SeatViewSet(viewsets.ModelViewSet):
         except Movie.DoesNotExist:
             return Response({"detail": "Invalid movie_id."}, status=400)
 
+        # If already booked for this movie, block
+        if Booking.objects.filter(movie=movie, seat=seat).exists():
+            return Response({"detail": "Seat already booked for this movie."}, status=400)
+
         # Choose user: real user if logged in; else create/get a 'guest' user for dev
         user = request.user if request.user.is_authenticated else None
         if user is None:
             user, _ = User.objects.get_or_create(username="guest")
 
         booking = Booking.objects.create(movie=movie, seat=seat, user=user)
-        seat.is_booked = True
-        seat.save(update_fields=["is_booked"])
 
         return Response(BookingSerializer(booking).data, status=status.HTTP_201_CREATED)
 
