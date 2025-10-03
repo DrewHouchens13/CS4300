@@ -40,7 +40,7 @@ def quick_book_seat(request, seat_id):
     user = request.user if request.user.is_authenticated else User.objects.get_or_create(username="guest")[0]
     Booking.objects.create(movie=movie, seat=seat, user=user)
     messages.success(request, f"Successfully booked seat {seat.seat_number} for {movie.title}!")
-    return redirect("../../movies/")
+    return redirect("../")
 
 
 def movie_seat_grid_page(request, movie_id: int):
@@ -61,7 +61,7 @@ def movie_seat_grid_page(request, movie_id: int):
                 booked_seats.append(seat.seat_number)
         if booked_seats:
             messages.success(request, f"Successfully booked seats {', '.join(booked_seats)} for {movie.title}!")
-        return redirect("../../movies/")
+        return redirect("../")
 
     seats = list(Seat.objects.all().order_by("seat_number"))
     booked_ids = set(Booking.objects.filter(movie=movie).values_list("seat_id", flat=True))
