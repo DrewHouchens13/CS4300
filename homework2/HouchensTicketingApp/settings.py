@@ -25,7 +25,20 @@ SECRET_KEY = 'django-insecure-of-5q*5()%2^!(2!%s=g*0yzitav1tdsd9mayu*_sdx&wd186d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["editor-cs4300container-20.devedu.io", "127.0.0.1"]
+ALLOWED_HOSTS = ["editor-cs4300container-20.devedu.io", "127.0.0.1", "localhost"]
+
+# Make Django generate URLs that include the reverse-proxy path prefix.
+# This ensures {% url %} and DRF router links work behind /proxy/8000.
+FORCE_SCRIPT_NAME = '/proxy/8000'
+
+# Trust reverse proxy headers for correct scheme/host when building absolute URLs
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+
+# When using HTTPS behind a proxy, also trust the origin for CSRF
+CSRF_TRUSTED_ORIGINS = [
+    'https://editor-cs4300container-20.devedu.io',
+]
 
 #Default permissions for API calls 
 REST_FRAMEWORK = {

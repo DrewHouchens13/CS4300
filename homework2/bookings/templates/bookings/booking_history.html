@@ -4,9 +4,9 @@
 <body>
   <h1>Booking History</h1>
   <nav>
-    <a href="/api/pages/movies/">Movies</a> |
-    <a href="/api/pages/seats/">Seats</a> |
-    <a href="/api/">API Root</a>
+    <a href="{% url 'movie_list_page' %}">Movies</a> |
+    <a href="{% url 'seat_list_page' %}">Seats</a> |
+    <a href="{% url 'movie-list' %}">API Root</a>
   </nav>
   <ul>
     {% for b in bookings %}

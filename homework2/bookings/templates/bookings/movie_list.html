@@ -4,9 +4,9 @@
 <body>
   <h1>Movies</h1>
   <nav>
-    <a href="/api/pages/seats/">Seats</a> |
-    <a href="/api/pages/history/">Booking History</a> |
-    <a href="/api/">API Root</a>
+    <a href="{% url 'seat_list_page' %}">Seats</a> |
+    <a href="{% url 'booking_history_page' %}">Booking History</a> |
+    <a href="{% url 'movie-list' %}">API Root</a>
   </nav>
   <ul>
     {% for m in movies %}

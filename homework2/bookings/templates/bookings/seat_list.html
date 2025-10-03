@@ -4,9 +4,9 @@
 <body>
   <h1>Seats</h1>
   <nav>
-    <a href="/api/pages/movies/">Movies</a> |
-    <a href="/api/pages/history/">Booking History</a> |
-    <a href="/api/">API Root</a>
+    <a href="{% url 'movie_list_page' %}">Movies</a> |
+    <a href="{% url 'booking_history_page' %}">Booking History</a> |
+    <a href="{% url 'movie-list' %}">API Root</a>
   </nav>
 
   <form method="get" action="">
@@ -25,7 +25,7 @@
       <li>
         Seat {{ s.seat_number }} — {% if s.is_booked %}<strong>Booked</strong>{% else %}Available{% endif %}
         {% if not s.is_booked %}
-          <form method="post" action="/api/pages/book/{{ s.id }}/" style="display:inline;">
+          <form method="post" action="{% url 'quick_book_seat' s.id %}" style="display:inline;">
             {% csrf_token %}
             <label>Movie ID: <input type="number" name="movie_id" required></label>
             <button type="submit">Book</button>
