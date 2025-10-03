@@ -1,33 +1,47 @@
-<!DOCTYPE html>
-<html>
-<head><title>Seats</title></head>
-<body>
-  <h1>Seats</h1>
-  <nav>
-    <a href="{% url 'movie_list_page' %}">Movies</a> |
-    <a href="{% url 'booking_history_page' %}">Booking History</a> |
-    <a href="{% url 'movie-list' %}">API Root</a>
-  </nav>
+{% extends 'bookings/base.html' %}
 
-  <ul>
-    {% for s in seats %}
-      <li>
-        Seat {{ s.seat_number }}
-        <form method="post" action="{% url 'quick_book_seat' s.id %}" style="display:inline; margin-left: 12px;">
-          {% csrf_token %}
-          <label>Movie:
-            <select name="movie_id" required>
-              {% for m in movies %}
-                <option value="{{ m.id }}">{{ m.title }}</option>
-              {% endfor %}
-            </select>
-          </label>
-          <button type="submit">Book</button>
-        </form>
-      </li>
-    {% empty %}
-      <li>No seats.</li>
-    {% endfor %}
-  </ul>
-</body>
-</html>
+{% block title %}Seat Management{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">Seat Management</h2>
+        
+        <div class="alert alert-warning">
+            <strong>Note:</strong> This is the legacy seat booking interface. For a better experience, 
+            <a href="{% url 'movie_list_page' %}">browse movies</a> and use the seat grid.
+        </div>
+
+        {% if seats %}
+            <div class="row">
+                {% for seat in seats %}
+                    <div class="col-md-4 col-lg-3 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title">Seat {{ seat.seat_number }}</h6>
+                                <form method="post" action="{% url 'quick_book_seat' seat.id %}">
+                                    {% csrf_token %}
+                                    <div class="mb-2">
+                                        <select name="movie_id" class="form-select form-select-sm" required>
+                                            <option value="">Select Movie</option>
+                                            {% for movie in movies %}
+                                                <option value="{{ movie.id }}">{{ movie.title }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-sm">Book</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                <h4>No seats found</h4>
+                <p>Seats will be automatically created when you first visit the seat grid.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

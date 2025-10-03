@@ -1,38 +1,44 @@
-<!DOCTYPE html>
-<html>
-<head><title>Movies</title></head>
-<body>
-  <h1>Movies</h1>
-  <nav>
-    <a href="{% url 'seat_list_page' %}">Seats</a> |
-    <a href="{% url 'booking_history_page' %}">Booking History</a> |
-    <a href="{% url 'movie-list' %}">API Root</a>
-  </nav>
-  
-  {% if messages %}
-    {% for message in messages %}
-      <div style="background: #d4edda; color: #155724; padding: 10px; margin: 10px 0; border: 1px solid #c3e6cb; border-radius: 4px;">
-        {{ message }}
-      </div>
-    {% endfor %}
-  {% endif %}
-  
-  <p>
-    Select a movie below, then click "Choose Seats" to open the seating grid.
-    Seats are shared across all movies; bookings are per-movie.
-  </p>
-  <ul>
-    {% for m in movies %}
-      <li>
-        <strong>{{ m.title }}</strong> ({{ m.release_date }}) — {{ m.duration }} min
-        <div>{{ m.description }}</div>
-        <div style="margin-top:6px;">
-          <a href="{% url 'movie_seat_grid_page' m.id %}">Choose Seats</a>
+{% extends 'bookings/base.html' %}
+
+{% block title %}Available Movies{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">Available Movies</h2>
+        
+        <div class="alert alert-info">
+            <strong>How to book:</strong> Select a movie below, then click "Choose Seats" to open the seating grid.
+            Seats are shared across all movies; bookings are per-movie.
         </div>
-      </li>
-    {% empty %}
-      <li>No movies found.</li>
-    {% endfor %}
-  </ul>
-</body>
-</html>
+
+        {% if movies %}
+            <div class="row">
+                {% for movie in movies %}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ movie.title }}</h5>
+                                <p class="card-text">{{ movie.description }}</p>
+                                <p class="text-muted">
+                                    <small>{{ movie.release_date }} • {{ movie.duration }} minutes</small>
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="{% url 'movie_seat_grid_page' movie.id %}" class="btn btn-primary">
+                                    Choose Seats
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                <h4>No movies found</h4>
+                <p>Please add some movies to the database to get started.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

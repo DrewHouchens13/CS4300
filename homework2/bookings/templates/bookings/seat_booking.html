@@ -1,0 +1,57 @@
+{% extends 'bookings/base.html' %}
+
+{% block title %}Seat Booking - {{ movie.title }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="mb-4">Seat Selection for {{ movie.title }}</h2>
+        
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="seat-grid">
+                        {% for row_letter, entries in ordered_rows %}
+                            {% for col, seat in entries %}
+                                {% if seat.id in booked_ids %}
+                                    <div class="seat booked">
+                                        {{ seat.seat_number }}
+                                        <small class="d-block">Booked</small>
+                                    </div>
+                                {% else %}
+                                    <label class="seat">
+                                        <input type="checkbox" name="seat_ids" value="{{ seat.id }}" class="d-none">
+                                        {{ seat.seat_number }}
+                                    </label>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">Book Selected Seats</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Add visual feedback for seat selection
+document.querySelectorAll('input[name="seat_ids"]').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        const seat = this.closest('label');
+        if (this.checked) {
+            seat.classList.add('selected');
+        } else {
+            seat.classList.remove('selected');
+        }
+    });
+});
+</script>
+{% endblock %}

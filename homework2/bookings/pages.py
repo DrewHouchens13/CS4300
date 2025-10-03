@@ -82,7 +82,7 @@ def movie_seat_grid_page(request, movie_id: int):
         "ordered_rows": ordered_rows,
         "booked_ids": booked_ids,
     }
-    return render(request, "bookings/seat_grid.html", context)
+    return render(request, "bookings/seat_booking.html", context)
 
 def booking_history_page(request):
     # If authenticated, show only their bookings; else show all (dev)
