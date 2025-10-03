@@ -26,6 +26,6 @@ from django.urls import path
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("bookings.urls")), #/api/movies/ etc.
-    # Use named URL so Django builds it with FORCE_SCRIPT_NAME exactly once
-    path("", RedirectView.as_view(pattern_name="movie_list_page", permanent=False)),
+    # Use a relative URL to avoid absolute path confusion behind proxies
+    path("", RedirectView.as_view(url="api/pages/movies/", permanent=False)),
 ]
