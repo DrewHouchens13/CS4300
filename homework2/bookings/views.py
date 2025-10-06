@@ -1,4 +1,6 @@
 from django.contrib.auth import get_user_model
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -8,12 +10,14 @@ from .serializers import MovieSerializer, SeatSerializer, BookingSerializer
 
 User = get_user_model()
 
+@method_decorator(csrf_exempt, name='dispatch')
 class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all().order_by("title")
     serializer_class = MovieSerializer
     permission_classes = [permissions.AllowAny]  # dev-friendly
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class SeatViewSet(viewsets.ModelViewSet):
     """
     /api/seats/                -> list/create
@@ -55,6 +59,7 @@ class SeatViewSet(viewsets.ModelViewSet):
         return Response(BookingSerializer(booking).data, status=status.HTTP_201_CREATED)
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class BookingViewSet(viewsets.ModelViewSet):
     """
     /api/bookings/      -> list/create
