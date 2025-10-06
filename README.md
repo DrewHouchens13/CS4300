@@ -37,8 +37,8 @@ CS4300/
 │   ├── requirements.txt               # Python dependencies
 │   ├── build.sh                       # Render deployment script
 │   └── db.sqlite3                     # SQLite database (development)
-├── hw2_env/                           # Python virtual environment
 ├── render.yaml                        # Render deployment configuration
+├── .gitignore                         # Git ignore rules
 └── README.md                          # This file
 ```
 
@@ -109,24 +109,30 @@ git clone <your-repo-url>
 cd CS4300
 ```
 
-#### 2. Activate the Virtual Environment
-The repository includes a pre-configured virtual environment with all required dependencies.
-
+#### 2. Create and Activate a Virtual Environment
 ```bash
+# Create a new virtual environment
+python -m venv venv
+
 # Activate on Windows (PowerShell)
-.\hw2_env\Scripts\activate
+.\venv\Scripts\Activate.ps1
 
 # Activate on Mac/Linux
-source hw2_env/bin/activate
+source venv/bin/activate
 ```
 
-#### 3. Run Database Migrations
+#### 3. Install Dependencies
 ```bash
 cd homework2
+pip install -r requirements.txt
+```
+
+#### 4. Run Database Migrations
+```bash
 python manage.py migrate
 ```
 
-#### 4. Run the Development Server
+#### 5. Run the Development Server
 ```bash
 # For local development
 python manage.py runserver
@@ -135,7 +141,7 @@ python manage.py runserver
 python manage.py runserver 0.0.0.0:3000
 ```
 
-#### 5. Access the Application
+#### 6. Access the Application
 - **Web Interface**: `http://localhost:8000/api/pages/movies/`
 - **API Root**: `http://localhost:8000/api/`
 - **Admin Panel**: `http://localhost:8000/admin/`
