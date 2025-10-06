@@ -315,6 +315,29 @@ Created for CS4300 - Homework 2
 
 ---
 
+## 🤖 AI Usage Statement
+
+In accordance with academic integrity policies, the following AI tools were used throughout the development of this project:
+
+### GPT-5 (OpenAI)
+- **Initial Project Setup**: Helped map out the steps to get the Django application started
+- **Database Models**: Assisted in creating the initial models for `Movie`, `Seat`, and `Booking` with proper relationships and constraints
+- **MVT Architecture**: Guided the implementation of Django's Model-View-Template pattern
+- **API Development**: Helped build serializers using Django REST Framework
+- **REST API Endpoints**: Assisted in creating ViewSets and configuring URL routing for CRUD operations
+
+### Claude Sonnet 4.5 (Anthropic)
+- **User Interface Design**: Helped create the Bootstrap 5-based responsive web interface
+- **Code Quality Improvements**: Utilized through agent code reviews in Cursor IDE for code refinement and best practices
+- **Testing Education**: Provided instruction on Django unit and integration testing methodologies
+- **Test Implementation**: Assisted in writing comprehensive test cases for models, API endpoints, and template pages
+- **Documentation**: Helped structure and write this README file with clear explanations and professional formatting
+
+### Development Workflow
+All AI-generated code and suggestions were reviewed, understood, and adapted to fit the specific requirements of this project. AI tools were used as learning aids and productivity enhancers, not as substitutes for understanding the underlying concepts and frameworks.
+
+---
+
 ## 📄 License
 
 This project is for educational purposes as part of CS4300 coursework.
