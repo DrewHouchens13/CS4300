@@ -9,11 +9,12 @@
         
         {% if bookings %}
             <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
                         <tr>
-                            <th>Date</th>
+                            <th>Booking Date</th>
                             <th>Movie</th>
+                            <th>Showtime</th>
                             <th>Seat</th>
                             <th>User</th>
                         </tr>
@@ -21,9 +22,16 @@
                     <tbody>
                         {% for booking in bookings %}
                             <tr>
-                                <td>{{ booking.booking_date|date:"M d, Y H:i" }}</td>
+                                <td>{{ booking.booking_date|date:"M d, Y g:i A" }}</td>
                                 <td><strong>{{ booking.movie.title }}</strong></td>
-                                <td><span class="badge bg-secondary">{{ booking.seat.seat_number }}</span></td>
+                                <td>
+                                    {% if booking.movie.showtime %}
+                                        <span class="badge bg-primary">{{ booking.movie.showtime|date:"M d, Y g:i A" }}</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">TBA</span>
+                                    {% endif %}
+                                </td>
+                                <td><span class="badge bg-success">{{ booking.seat.seat_number }}</span></td>
                                 <td>{{ booking.user.username|default:"Guest" }}</td>
                             </tr>
                         {% endfor %}

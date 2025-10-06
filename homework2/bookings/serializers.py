@@ -4,7 +4,7 @@ from .models import Movie, Seat, Booking
 class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
-        fields = ["id", "title", "description", "release_date", "duration"]
+        fields = ["id", "title", "description", "release_date", "duration", "showtime"]
 
 class SeatSerializer(serializers.ModelSerializer):
     class Meta:

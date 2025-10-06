@@ -16,17 +16,24 @@
             <div class="row">
                 {% for movie in movies %}
                     <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card h-100">
+                        <div class="card h-100 movie-card">
                             <div class="card-body">
                                 <h5 class="card-title">{{ movie.title }}</h5>
                                 <p class="card-text">{{ movie.description }}</p>
-                                <p class="text-muted">
-                                    <small>{{ movie.release_date }} • {{ movie.duration }} minutes</small>
+                                <p class="text-muted mb-2">
+                                    <small>Released: {{ movie.release_date|date:"M d, Y" }} • {{ movie.duration }} min</small>
                                 </p>
+                                {% if movie.showtime %}
+                                    <span class="showtime-badge">
+                                        🎬 {{ movie.showtime|date:"M d, Y g:i A" }}
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Showtime TBA</span>
+                                {% endif %}
                             </div>
-                            <div class="card-footer">
-                                <a href="{% url 'movie_seat_grid_page' movie.id %}" class="btn btn-primary">
-                                    Choose Seats
+                            <div class="card-footer bg-transparent">
+                                <a href="{% url 'movie_seat_grid_page' movie.id %}" class="btn btn-primary w-100">
+                                    🎫 Choose Seats
                                 </a>
                             </div>
                         </div>

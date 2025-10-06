@@ -23,19 +23,94 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
-        }
-        .seat:hover {
-            border-color: #0d6efd;
+            font-weight: 600;
+            font-size: 0.95rem;
             background-color: #f8f9fa;
+        }
+        .seat:hover:not(.booked) {
+            border-color: #0d6efd;
+            background-color: #e7f3ff;
+            transform: scale(1.05);
         }
         .seat.booked {
             background-color: #dc3545;
             color: white;
             cursor: not-allowed;
+            border-color: #bb2d3b;
+            opacity: 0.9;
         }
         .seat.selected {
+            background-color: #198754;
+            color: white;
+            border-color: #146c43;
+        }
+        
+        /* Screen styling */
+        .screen-container {
+            max-width: 500px;
+            margin: 0 auto 30px;
+        }
+        .screen {
+            background: linear-gradient(to bottom, #2c3e50, #34495e);
+            color: white;
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+            font-weight: bold;
+            letter-spacing: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border: 3px solid #95a5a6;
+            border-bottom: none;
+        }
+        
+        /* Legend styling */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+        .legend-box {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            border: 2px solid #dee2e6;
+            display: inline-block;
+        }
+        .legend-box.available {
+            background-color: #f8f9fa;
+        }
+        .legend-box.selected-demo {
+            background-color: #198754;
+            border-color: #146c43;
+        }
+        .legend-box.booked-demo {
+            background-color: #dc3545;
+            border-color: #bb2d3b;
+        }
+        
+        /* Movie card improvements */
+        .movie-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .movie-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .showtime-badge {
             background-color: #0d6efd;
             color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-top: 8px;
         }
     </style>
 </head>

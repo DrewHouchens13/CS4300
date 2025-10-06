@@ -6,6 +6,7 @@ class Movie(models.Model):
     description = models.TextField()
     release_date = models.DateField()
     duration = models.PositiveIntegerField(help_text="Duration in minutes")
+    showtime = models.DateTimeField(help_text="Movie showtime", null=True, blank=True)
 
     def __str__(self):
         return self.title

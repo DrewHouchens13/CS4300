@@ -12,16 +12,27 @@
                 <form method="post">
                     {% csrf_token %}
                     
+                    <!-- Screen indicator -->
+                    <div class="screen-container text-center mb-4">
+                        <div class="screen">SCREEN</div>
+                    </div>
+
+                    <!-- Legend -->
+                    <div class="legend text-center mb-3">
+                        <span class="legend-item"><span class="legend-box available"></span> Available</span>
+                        <span class="legend-item"><span class="legend-box selected-demo"></span> Selected</span>
+                        <span class="legend-item"><span class="legend-box booked-demo"></span> Booked</span>
+                    </div>
+                    
                     <div class="seat-grid">
                         {% for row_letter, entries in ordered_rows %}
                             {% for col, seat in entries %}
                                 {% if seat.id in booked_ids %}
-                                    <div class="seat booked">
+                                    <div class="seat booked" title="Seat {{ seat.seat_number }} - Already Booked">
                                         {{ seat.seat_number }}
-                                        <small class="d-block">Booked</small>
                                     </div>
                                 {% else %}
-                                    <label class="seat">
+                                    <label class="seat" title="Seat {{ seat.seat_number }} - Click to select">
                                         <input type="checkbox" name="seat_ids" value="{{ seat.id }}" class="d-none">
                                         {{ seat.seat_number }}
                                     </label>
@@ -32,6 +43,7 @@
 
                     <div class="text-center mt-4">
                         <button type="submit" class="btn btn-primary btn-lg">Book Selected Seats</button>
+                        <a href="{% url 'movie_list_page' %}" class="btn btn-secondary btn-lg">Back to Movies</a>
                     </div>
                 </form>
             </div>
