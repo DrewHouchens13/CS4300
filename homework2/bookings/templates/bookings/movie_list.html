@@ -24,7 +24,7 @@
                                     <small>Released: {{ movie.release_date|date:"M d, Y" }} • {{ movie.duration }} min</small>
                                 </p>
                                 {% if movie.showtime %}
-                                    <span class="showtime-badge">
+                                    <span class="showtime-badge-orange">
                                         🎬 {{ movie.showtime|date:"M d, Y g:i A" }}
                                     </span>
                                 {% else %}

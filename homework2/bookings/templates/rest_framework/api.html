@@ -1,0 +1,55 @@
+{% extends "rest_framework/base.html" %}
+
+{% block branding %}
+    <a class='navbar-brand' rel="nofollow" href='/'>
+        🎬 Movie Theater API
+    </a>
+{% endblock %}
+
+{% block userlinks %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'movie_list_page' %}">
+            <span class="badge bg-success">← Back to Main Site</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/api/">
+            <strong>API Root</strong>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/api/movies/">
+            Movies
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/api/seats/">
+            Seats
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/api/bookings/">
+            Bookings
+        </a>
+    </li>
+    {{ block.super }}
+{% endblock %}
+
+{% block footer %}
+    <div class="container-fluid" style="padding: 20px 0;">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p class="text-muted">
+                    <strong>Quick Navigation:</strong>
+                    <a href="/api/">API Root</a> |
+                    <a href="/api/movies/">All Movies</a> |
+                    <a href="{% url 'movie_list_page' %}">Main Site</a>
+                </p>
+                <p class="text-muted">
+                    <small>💡 Tip: Click on a movie ID to access delete/update actions</small>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
