@@ -15,46 +15,6 @@
     </li>
 {% endblock %}
 
-{% block content %}
-    {{ block.super }}
-    
-    {# Add movie links section if this is the movie list view #}
-    {% if movie_list %}
-    <div style="margin-top: 40px; padding: 25px; background: linear-gradient(to bottom, #f8f9fa, #e9ecef); border: 2px solid #0d6efd; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-        <h3 style="margin-bottom: 20px; color: #0d6efd; border-bottom: 2px solid #0d6efd; padding-bottom: 10px;">
-            🎬 Quick Access to Individual Movies
-        </h3>
-        <p style="color: #495057; margin-bottom: 20px; font-size: 15px;">
-            Click any movie below to view its details, update showtime, or delete it:
-        </p>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px;">
-            {% for movie in movie_list %}
-                <a href="/api/movies/{{ movie.id }}/" 
-                   class="btn btn-outline-primary" 
-                   style="text-align: left; padding: 15px; font-size: 14px; border-width: 2px; transition: all 0.2s;">
-                    <div style="font-weight: 600; font-size: 16px; margin-bottom: 5px;">
-                        {{ movie.title }}
-                    </div>
-                    <div style="color: #6c757d; font-size: 12px;">
-                        ID: {{ movie.id }} • 
-                        {% if movie.showtime %}
-                            🎬 {{ movie.showtime|date:"M d, g:i A" }}
-                        {% else %}
-                            No showtime set
-                        {% endif %}
-                    </div>
-                </a>
-            {% endfor %}
-        </div>
-        
-        <div style="margin-top: 20px; padding: 15px; background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 6px;">
-            <strong>💡 Tip:</strong> Click any movie card above to access delete and update showtime actions
-        </div>
-    </div>
-    {% endif %}
-{% endblock %}
-
 {% block footer %}
     <div class="container-fluid" style="padding: 30px 0; background-color: #f8f9fa; margin-top: 50px;">
         <div class="row">

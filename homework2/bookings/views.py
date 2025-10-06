@@ -12,24 +12,17 @@ class MovieViewSet(viewsets.ModelViewSet):
     """
     Movie Management API
     
-    📋 List all movies: GET /api/movies/
-    ➕ Create movie: POST /api/movies/ (use form at bottom)
-    🔗 Quick links to each movie shown below
+    List all movies: GET /api/movies/
+    Create movie: POST /api/movies/ (use form at bottom)
+    View movie details: GET /api/movies/<id>/
     
     On individual movie pages, scroll down for:
-    🗑️ Delete Movie button
-    🎬 Update Showtime form
+    - Delete Movie button
+    - Update Showtime form
     """
     queryset = Movie.objects.all().order_by("title")
     serializer_class = MovieSerializer
     permission_classes = [permissions.AllowAny]
-    
-    def get_renderer_context(self):
-        """Add movies to template context for link generation"""
-        context = super().get_renderer_context()
-        if self.action == 'list':
-            context['movie_list'] = list(self.get_queryset())
-        return context
 
     @action(detail=True, methods=["post"], url_path='delete-movie', url_name='delete-movie')
     def delete_movie(self, request, pk=None):
@@ -42,7 +35,7 @@ class MovieViewSet(viewsets.ModelViewSet):
         movie.delete()
         return Response({
             "success": True,
-            "message": f"✅ Movie '{movie_title}' deleted successfully!",
+            "message": f"Movie '{movie_title}' deleted successfully!",
             "bookings_deleted": booking_count
         }, status=status.HTTP_200_OK)
 
@@ -68,7 +61,7 @@ class MovieViewSet(viewsets.ModelViewSet):
         
         return Response({
             "success": True,
-            "message": f"✅ Showtime updated for '{movie.title}'",
+            "message": f"Showtime updated for '{movie.title}'",
             "movie": MovieSerializer(movie).data
         }, status=status.HTTP_200_OK)
 
