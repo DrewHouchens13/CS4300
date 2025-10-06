@@ -68,8 +68,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bookings',  # Must be before rest_framework to override templates
     'rest_framework',
-    'bookings',
 ]
 
 MIDDLEWARE = [

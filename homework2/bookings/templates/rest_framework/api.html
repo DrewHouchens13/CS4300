@@ -1,55 +1,40 @@
 {% extends "rest_framework/base.html" %}
 
 {% block branding %}
-    <a class='navbar-brand' rel="nofollow" href='/'>
+    <a class='navbar-brand' rel="nofollow" href='/api/'>
         🎬 Movie Theater API
     </a>
 {% endblock %}
 
 {% block userlinks %}
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'movie_list_page' %}">
-            <span class="badge bg-success">← Back to Main Site</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/api/">
-            <strong>API Root</strong>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/api/movies/">
-            Movies
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/api/seats/">
-            Seats
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/api/bookings/">
-            Bookings
-        </a>
-    </li>
     {{ block.super }}
+    <li class="nav-item">
+        <a class="nav-link btn btn-success btn-sm text-white" href="{% url 'movie_list_page' %}" style="margin-left: 10px;">
+            🏠 Back to Main Site
+        </a>
+    </li>
 {% endblock %}
 
 {% block footer %}
-    <div class="container-fluid" style="padding: 20px 0;">
+    <div class="container-fluid" style="padding: 30px 0; background-color: #f8f9fa; margin-top: 50px;">
         <div class="row">
             <div class="col-md-12 text-center">
-                <p class="text-muted">
-                    <strong>Quick Navigation:</strong>
-                    <a href="/api/">API Root</a> |
-                    <a href="/api/movies/">All Movies</a> |
-                    <a href="{% url 'movie_list_page' %}">Main Site</a>
+                <h5>Quick Navigation</h5>
+                <p>
+                    <a href="/api/" class="btn btn-outline-primary btn-sm">📋 API Root</a>
+                    <a href="/api/movies/" class="btn btn-outline-primary btn-sm">🎬 Movies List</a>
+                    <a href="/api/seats/" class="btn btn-outline-primary btn-sm">💺 Seats List</a>
+                    <a href="/api/bookings/" class="btn btn-outline-primary btn-sm">🎫 Bookings List</a>
+                    <a href="{% url 'movie_list_page' %}" class="btn btn-success btn-sm">🏠 Main Site</a>
                 </p>
+                <hr style="margin: 20px auto; width: 50%;">
                 <p class="text-muted">
-                    <small>💡 Tip: Click on a movie ID to access delete/update actions</small>
+                    <strong>💡 How to Delete or Update Movies:</strong><br>
+                    1. Go to <a href="/api/movies/">Movies List</a><br>
+                    2. Click the <strong>URL link</strong> of any movie (e.g., "http://.../api/movies/1/")<br>
+                    3. Scroll down to see Delete and Update actions
                 </p>
             </div>
         </div>
     </div>
 {% endblock %}
-
