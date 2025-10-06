@@ -55,7 +55,6 @@ CS4300/
 - **`GET /api/movies/{id}/`** - View movie details
 - **`PUT /api/movies/{id}/`** - Update movie
 - **`DELETE /api/movies/{id}/`** - Delete movie
-- **`POST /api/movies/{id}/delete-movie/`** - Delete movie with all bookings
 - **`POST /api/movies/{id}/update-showtime/`** - Update movie showtime
 
 #### Seats API
@@ -124,26 +123,13 @@ python3 -m venv hw2_env
 source hw2_env/bin/activate
 ```
 
-#### 3. Install Dependencies
+#### 3. Run Database Migrations
 ```bash
 cd homework2
-pip install -r requirements.txt
-```
-
-#### 4. Run Database Migrations
-```bash
 python manage.py migrate
 ```
 
-#### 5. Create Sample Data (Optional)
-```bash
-# Create a superuser for admin access
-python manage.py createsuperuser
-
-# Access Django admin at http://localhost:8000/admin/ to add movies and seats
-```
-
-#### 6. Run the Development Server
+#### 4. Run the Development Server
 ```bash
 # For local development
 python manage.py runserver
@@ -152,7 +138,7 @@ python manage.py runserver
 python manage.py runserver 0.0.0.0:3000
 ```
 
-#### 7. Access the Application
+#### 5. Access the Application
 - **Web Interface**: `http://localhost:8000/api/pages/movies/`
 - **API Root**: `http://localhost:8000/api/`
 - **Admin Panel**: `http://localhost:8000/admin/`
