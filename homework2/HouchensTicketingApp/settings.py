@@ -36,7 +36,9 @@ if RENDER_EXTERNAL_HOSTNAME:
 
 # Make Django generate URLs that include the reverse-proxy path prefix.
 # This ensures {% url %} and DRF router links work behind /proxy/8000.
-FORCE_SCRIPT_NAME = '/proxy/8000'
+# Only use this in development (devedu.io), not on Render
+if DEBUG and 'editor-cs4300container-20.devedu.io' in ALLOWED_HOSTS:
+    FORCE_SCRIPT_NAME = '/proxy/8000'
 
 # Trust reverse proxy headers for correct scheme/host when building absolute URLs
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -46,6 +48,10 @@ USE_X_FORWARDED_HOST = True
 CSRF_TRUSTED_ORIGINS = [
     'https://editor-cs4300container-20.devedu.io',
 ]
+
+# Add Render.com URL to CSRF trusted origins
+if RENDER_EXTERNAL_HOSTNAME:
+    CSRF_TRUSTED_ORIGINS.append(f'https://{RENDER_EXTERNAL_HOSTNAME}')
 
 #Default permissions for API calls 
 REST_FRAMEWORK = {
