@@ -109,11 +109,10 @@ git clone <your-repo-url>
 cd CS4300
 ```
 
-#### 2. Create and Activate Virtual Environment
-```bash
-# Create virtual environment
-python3 -m venv hw2_env
+#### 2. Activate the Virtual Environment
+The repository includes a pre-configured virtual environment with all required dependencies.
 
+```bash
 # Activate on Windows (PowerShell)
 .\hw2_env\Scripts\activate
 
