@@ -1,6 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -10,14 +8,52 @@ from .serializers import MovieSerializer, SeatSerializer, BookingSerializer
 
 User = get_user_model()
 
-@method_decorator(csrf_exempt, name='dispatch')
 class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all().order_by("title")
     serializer_class = MovieSerializer
     permission_classes = [permissions.AllowAny]  # dev-friendly
 
+    @action(detail=True, methods=["post"])
+    def delete_movie(self, request, pk=None):
+        """
+        Delete a movie and all its bookings.
+        POST to /api/movies/<id>/delete_movie/
+        No body required.
+        """
+        movie = self.get_object()
+        movie_title = movie.title
+        movie.delete()
+        return Response({
+            "success": True,
+            "message": f"Movie '{movie_title}' and all its bookings have been deleted."
+        }, status=status.HTTP_200_OK)
 
-@method_decorator(csrf_exempt, name='dispatch')
+    @action(detail=True, methods=["post"])
+    def update_showtime(self, request, pk=None):
+        """
+        Update the showtime for a movie.
+        POST to /api/movies/<id>/update_showtime/
+        Body: {"showtime": "2025-10-15T19:30:00Z"}
+        """
+        movie = self.get_object()
+        showtime = request.data.get("showtime")
+        
+        if not showtime:
+            return Response({
+                "success": False,
+                "error": "showtime field is required"
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        movie.showtime = showtime
+        movie.save()
+        
+        return Response({
+            "success": True,
+            "message": f"Showtime updated for '{movie.title}'",
+            "movie": MovieSerializer(movie).data
+        }, status=status.HTTP_200_OK)
+
+
 class SeatViewSet(viewsets.ModelViewSet):
     """
     /api/seats/                -> list/create
@@ -59,7 +95,6 @@ class SeatViewSet(viewsets.ModelViewSet):
         return Response(BookingSerializer(booking).data, status=status.HTTP_201_CREATED)
 
 
-@method_decorator(csrf_exempt, name='dispatch')
 class BookingViewSet(viewsets.ModelViewSet):
     """
     /api/bookings/      -> list/create
