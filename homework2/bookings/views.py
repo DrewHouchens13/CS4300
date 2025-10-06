@@ -14,7 +14,7 @@ class MovieViewSet(viewsets.ModelViewSet):
     
     📋 List all movies: GET /api/movies/
     ➕ Create movie: POST /api/movies/ (use form at bottom)
-    👁️ View movie details: Click on a movie's URL to see details
+    🔗 Quick links to each movie shown below
     
     On individual movie pages, scroll down for:
     🗑️ Delete Movie button
@@ -23,6 +23,13 @@ class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all().order_by("title")
     serializer_class = MovieSerializer
     permission_classes = [permissions.AllowAny]
+    
+    def get_renderer_context(self):
+        """Add movies to template context for link generation"""
+        context = super().get_renderer_context()
+        if self.action == 'list':
+            context['movie_list'] = list(self.get_queryset())
+        return context
 
     @action(detail=True, methods=["post"], url_path='delete-movie', url_name='delete-movie')
     def delete_movie(self, request, pk=None):
