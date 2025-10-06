@@ -14,8 +14,6 @@ urlpatterns = [
 
     # Pages (MVT)
     path("pages/movies/", pages.movie_list_page, name="movie_list_page"),
-    path("pages/seats/", pages.seat_list_page, name="seat_list_page"),
-    path("pages/book/<int:seat_id>/", pages.quick_book_seat, name="quick_book_seat"),
     path("pages/history/", pages.booking_history_page, name="booking_history_page"),
     path("pages/movies/<int:movie_id>/seats/", pages.movie_seat_grid_page, name="movie_seat_grid_page"),
 ]

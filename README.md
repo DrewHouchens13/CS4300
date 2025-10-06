@@ -30,7 +30,6 @@ CS4300/
 │   │       │   ├── base.html          # Bootstrap base template
 │   │       │   ├── movie_list.html    # Movie listing page
 │   │       │   ├── seat_booking.html  # Seat booking interface
-│   │       │   ├── seat_list.html     # Seat selection grid
 │   │       │   └── booking_history.html # User booking history
 │   │       └── rest_framework/
 │   │           └── api.html           # Custom DRF browsable API template
@@ -73,7 +72,6 @@ CS4300/
 - **`/api/pages/movies/`** - Browse available movies with showtime information
 - **`/api/pages/movies/{id}/seats/`** - Interactive seat selection grid per movie
 - **`/api/pages/history/`** - View all booking history
-- **`/api/pages/seats/`** - View all available seats
 
 ### Database Models
 
@@ -304,7 +302,9 @@ The application follows Django's Model-View-Template pattern:
 
 ---
 
-## 👤 Author
+## 👤 Developer
+
+**Drew Houchens**
 
 Created for CS4300 - Homework 2
 

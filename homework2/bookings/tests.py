@@ -113,6 +113,29 @@ class APITests(APITestCase):
         self.assertEqual(response.data['title'], 'New Movie')
         self.assertEqual(Movie.objects.count(), 2)
     
+    def test_movie_update_showtime(self):
+        """Test POST /api/movies/{id}/update-showtime/ updates movie showtime"""
+        url = f'/api/movies/{self.movie.pk}/update-showtime/'
+        data = {'showtime': '2025-10-15T19:30:00Z'}
+        response = self.client.post(url, data, format='json')
+        
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(response.data['success'])
+        self.assertIn('updated', response.data['message'].lower())
+        
+        # Verify movie was updated
+        self.movie.refresh_from_db()
+        self.assertIsNotNone(self.movie.showtime)
+    
+    def test_movie_update_showtime_missing_data(self):
+        """Test update showtime fails without showtime data"""
+        url = f'/api/movies/{self.movie.pk}/update-showtime/'
+        data = {}
+        response = self.client.post(url, data, format='json')
+        
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('error', response.data)
+    
     def test_seats_api_list(self):
         """Test GET /api/seats/ returns list of seats"""
         url = '/api/seats/'
@@ -156,7 +179,7 @@ class APITests(APITestCase):
         response = self.client.post(url, data, format='json')
         
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn('already booked', response.data['detail'].lower())
+        self.assertIn('already booked', response.data['error'].lower())
     
     def test_bookings_api_list(self):
         """Test GET /api/bookings/ returns list of bookings"""
