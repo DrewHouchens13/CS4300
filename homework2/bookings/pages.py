@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
-from django.views.decorators.http import require_http_methods
 from django.contrib import messages
 from .models import Movie, Seat, Booking
 
@@ -18,29 +17,9 @@ def _ensure_seat_grid(rows: int = 5, cols: int = 5) -> None:
     Seat.objects.bulk_create(to_create)
 
 def movie_list_page(request):
+    """Display all available movies with their details and showtimes."""
     movies = Movie.objects.all().order_by("title")
     return render(request, "bookings/movie_list.html", {"movies": movies})
-
-def seat_list_page(request):
-    _ensure_seat_grid()
-    seats = Seat.objects.all().order_by("seat_number")
-    movies = Movie.objects.all().order_by("title")
-    return render(request, "bookings/seat_list.html", {"seats": seats, "movies": movies})
-
-@require_http_methods(["POST"])
-def quick_book_seat(request, seat_id):
-    seat = get_object_or_404(Seat, pk=seat_id)
-    movie_id = request.POST.get("movie_id")
-    if not movie_id:
-        return redirect("seat_list_page")
-    movie = get_object_or_404(Movie, pk=movie_id)
-    # Prevent double-booking for the same movie
-    if Booking.objects.filter(movie=movie, seat=seat).exists():
-        return redirect("seat_list_page")
-    user = request.user if request.user.is_authenticated else User.objects.get_or_create(username="guest")[0]
-    Booking.objects.create(movie=movie, seat=seat, user=user)
-    messages.success(request, f"Successfully booked seat {seat.seat_number} for {movie.title}!")
-    return redirect("../../")
 
 
 def movie_seat_grid_page(request, movie_id: int):
@@ -85,7 +64,12 @@ def movie_seat_grid_page(request, movie_id: int):
     return render(request, "bookings/seat_booking.html", context)
 
 def booking_history_page(request):
-    # If authenticated, show only their bookings; else show all (dev)
+    """
+    Display booking history for the current user.
+    
+    Shows only user's bookings if authenticated, otherwise shows all bookings
+    (useful for development/testing without authentication).
+    """
     if request.user.is_authenticated:
         bookings = Booking.objects.filter(user=request.user).select_related("movie", "seat").order_by("-booking_date")
     else:

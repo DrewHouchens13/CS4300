@@ -8,7 +8,7 @@ from .models import Movie, Seat, Booking
 
 
 class ModelTests(TestCase):
-    """Unit tests for Movie, Seat, and Booking models"""
+    """Unit tests for Movie, Seat, and Booking models."""
     
     def setUp(self):
         """Set up test data"""
@@ -22,19 +22,19 @@ class ModelTests(TestCase):
         self.user = User.objects.create_user(username="testuser", password="testpass")
     
     def test_movie_creation(self):
-        """Test Movie model creation and string representation"""
+        """Test Movie model creation and string representation."""
         self.assertEqual(str(self.movie), "Test Movie")
         self.assertEqual(self.movie.title, "Test Movie")
         self.assertEqual(self.movie.duration, 120)
         self.assertEqual(self.movie.release_date, date(2024, 1, 1))
     
     def test_seat_creation(self):
-        """Test Seat model creation and string representation"""
+        """Test Seat model creation and string representation."""
         self.assertEqual(str(self.seat), "Seat A1")
         self.assertEqual(self.seat.seat_number, "A1")
     
     def test_booking_creation(self):
-        """Test Booking model creation and string representation"""
+        """Test Booking model creation and string representation."""
         booking = Booking.objects.create(
             movie=self.movie,
             seat=self.seat,
@@ -47,17 +47,17 @@ class ModelTests(TestCase):
         self.assertEqual(booking.user, self.user)
     
     def test_booking_unique_constraint(self):
-        """Test that same seat cannot be booked twice for same movie"""
+        """Test that same seat cannot be booked twice for same movie."""
         # Create first booking
         Booking.objects.create(movie=self.movie, seat=self.seat, user=self.user)
         
-        # Try to create duplicate booking - should raise IntegrityError
+        # Attempt to create duplicate booking - should raise IntegrityError
         from django.db import IntegrityError
         with self.assertRaises(IntegrityError):
             Booking.objects.create(movie=self.movie, seat=self.seat, user=self.user)
     
     def test_seat_can_be_booked_for_different_movies(self):
-        """Test that same seat can be booked for different movies"""
+        """Test that same seat can be booked for different movies."""
         movie2 = Movie.objects.create(
             title="Another Movie",
             description="Another test movie",
@@ -75,7 +75,7 @@ class ModelTests(TestCase):
 
 
 class APITests(APITestCase):
-    """Integration tests for API endpoints"""
+    """Integration tests for RESTful API endpoints."""
     
     def setUp(self):
         """Set up test data"""
@@ -89,7 +89,7 @@ class APITests(APITestCase):
         self.user = User.objects.create_user(username="apiuser", password="testpass")
     
     def test_movies_api_list(self):
-        """Test GET /api/movies/ returns list of movies"""
+        """Test GET /api/movies/ returns list of movies."""
         url = '/api/movies/'
         response = self.client.get(url)
         
@@ -99,7 +99,7 @@ class APITests(APITestCase):
         self.assertEqual(response.data[0]['duration'], 120)
     
     def test_movies_api_create(self):
-        """Test POST /api/movies/ creates new movie"""
+        """Test POST /api/movies/ creates new movie."""
         url = '/api/movies/'
         data = {
             'title': 'New Movie',
@@ -114,7 +114,7 @@ class APITests(APITestCase):
         self.assertEqual(Movie.objects.count(), 2)
     
     def test_movie_update_showtime(self):
-        """Test POST /api/movies/{id}/update-showtime/ updates movie showtime"""
+        """Test POST /api/movies/{id}/update-showtime/ updates movie showtime."""
         url = f'/api/movies/{self.movie.pk}/update-showtime/'
         data = {'showtime': '2025-10-15T19:30:00Z'}
         response = self.client.post(url, data, format='json')
@@ -128,7 +128,7 @@ class APITests(APITestCase):
         self.assertIsNotNone(self.movie.showtime)
     
     def test_movie_update_showtime_missing_data(self):
-        """Test update showtime fails without showtime data"""
+        """Test update showtime fails without showtime data."""
         url = f'/api/movies/{self.movie.pk}/update-showtime/'
         data = {}
         response = self.client.post(url, data, format='json')
@@ -137,7 +137,7 @@ class APITests(APITestCase):
         self.assertIn('error', response.data)
     
     def test_seats_api_list(self):
-        """Test GET /api/seats/ returns list of seats"""
+        """Test GET /api/seats/ returns list of seats."""
         url = '/api/seats/'
         response = self.client.get(url)
         
@@ -146,7 +146,7 @@ class APITests(APITestCase):
         self.assertEqual(response.data[0]['seat_number'], "B2")
     
     def test_seats_api_create(self):
-        """Test POST /api/seats/ creates new seat"""
+        """Test POST /api/seats/ creates new seat."""
         url = '/api/seats/'
         data = {'seat_number': 'C3'}
         response = self.client.post(url, data, format='json')
@@ -156,7 +156,7 @@ class APITests(APITestCase):
         self.assertEqual(Seat.objects.count(), 2)
     
     def test_seat_booking_api(self):
-        """Test POST /api/seats/{id}/book/ books a seat"""
+        """Test POST /api/seats/{id}/book/ books a seat."""
         url = f'/api/seats/{self.seat.pk}/book/'
         data = {'movie_id': self.movie.pk}
         response = self.client.post(url, data, format='json')
@@ -169,7 +169,7 @@ class APITests(APITestCase):
         self.assertEqual(booking.seat, self.seat)
     
     def test_seat_booking_duplicate_fails(self):
-        """Test that booking same seat twice for same movie fails"""
+        """Test that booking same seat twice for same movie fails."""
         # Create first booking
         Booking.objects.create(movie=self.movie, seat=self.seat, user=self.user)
         
@@ -182,7 +182,7 @@ class APITests(APITestCase):
         self.assertIn('already booked', response.data['error'].lower())
     
     def test_bookings_api_list(self):
-        """Test GET /api/bookings/ returns list of bookings"""
+        """Test GET /api/bookings/ returns list of bookings."""
         # Create a booking first
         Booking.objects.create(movie=self.movie, seat=self.seat, user=self.user)
         
@@ -195,7 +195,7 @@ class APITests(APITestCase):
         self.assertEqual(response.data[0]['seat']['seat_number'], "B2")
     
     def test_bookings_api_create(self):
-        """Test POST /api/bookings/ creates new booking"""
+        """Test POST /api/bookings/ creates new booking."""
         url = '/api/bookings/'
         data = {
             'movie_id': self.movie.pk,
@@ -212,7 +212,7 @@ class APITests(APITestCase):
 
 
 class PageTests(TestCase):
-    """Tests for Django template pages"""
+    """Tests for Django template-based web pages."""
     
     def setUp(self):
         """Set up test data"""
@@ -225,7 +225,7 @@ class PageTests(TestCase):
         )
     
     def test_movie_list_page(self):
-        """Test movie list page loads correctly"""
+        """Test movie list page loads correctly."""
         url = '/api/pages/movies/'
         response = self.client.get(url)
         
@@ -233,7 +233,7 @@ class PageTests(TestCase):
         self.assertContains(response, "Page Test Movie")
     
     def test_seat_booking_page(self):
-        """Test seat booking page loads correctly"""
+        """Test seat booking page loads correctly."""
         url = f'/api/pages/movies/{self.movie.pk}/seats/'
         response = self.client.get(url)
         
@@ -241,7 +241,7 @@ class PageTests(TestCase):
         self.assertContains(response, "Page Test Movie")
     
     def test_booking_history_page(self):
-        """Test booking history page loads correctly"""
+        """Test booking history page loads correctly."""
         url = '/api/pages/history/'
         response = self.client.get(url)
         
